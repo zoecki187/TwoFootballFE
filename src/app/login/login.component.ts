@@ -29,11 +29,24 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async checkMail() {
+  checkMail() {
     for(const user of this.Users){
       if(user.nutzerEmail === this.UserEmail ){
         this.UserLoggedIn = true; 
-        alert('Du bist eingeloggt!');
+        //alert('Du bist eingeloggt!');
+        localStorage.setItem('user', this.UserEmail);
+      }  
+    }
+    if (this.UserLoggedIn == false) {
+      //alert('Bitte gib eine korrekte Email ein!')
+      localStorage.setItem('user', this.UserEmail);
+    }
+    return this.UserLoggedIn
+  }
+  checkMailWithAlert() {
+    for(const user of this.Users){
+      if(user.nutzerEmail === this.UserEmail ){
+        this.UserLoggedIn = true; 
         localStorage.setItem('user', this.UserEmail);
       }  
     }
@@ -41,5 +54,6 @@ export class LoginComponent implements OnInit {
       alert('Bitte gib eine korrekte Email ein!')
       localStorage.setItem('user', this.UserEmail);
     }
+    return this.UserLoggedIn;
   }
 }

@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   vereinID: number = 1;
   UserEmail: String = '';
   selectedLeague = '';
-  test: String = 'hallo';
+  selectedVereine: Verein[] = [];
 
   constructor(
     private opendbligdbaservice: OpenLigaDbService,
@@ -43,6 +43,16 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  getVereineByLeague(){
+    for(let verein of this.Vereine){
+      if(parseInt(this.selectedLeague) != verein.ligaID){
+        continue;
+      }else{
+        this.selectedVereine.push(verein);
+      }
+    }
+  }
+
   storeUserOnDB(): void {
     alert(
       'Du bist registriert mit folgender Email: ' +
@@ -57,5 +67,9 @@ export class RegisterComponent implements OnInit {
   }
   onSubmit() {
     this.storeUserOnDB();
+  }
+  onChange(){
+    this.selectedVereine=[];
+    this.getVereineByLeague();
   }
 }

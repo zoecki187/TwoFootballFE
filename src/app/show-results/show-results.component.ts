@@ -20,8 +20,8 @@ export class ShowResultsComponent implements OnInit {
   gameday: Match[] = [];
   gamedays: number[] = [];
   selectedGameday: number = 1;
-  leaguepreference: String = 'bl1';
-  teampreference: number = 16;
+  leaguepreference: String = '';
+  teampreference: number | undefined ;
   teampreferencename: String = '';
   allMatchesOfSeason: Match[] = [];
   listOfMatchesFromSelectedTeam: Match[] = [];
@@ -40,6 +40,7 @@ export class ShowResultsComponent implements OnInit {
     this.myclub();
     this.getUserData();
     this.getVereinData();
+    this.getLeaguePreferenceByMail();
   }
 
   ngOnInit(): void {}
@@ -111,7 +112,7 @@ export class ShowResultsComponent implements OnInit {
 
   async getAllMatchesOfSeason(): Promise<Match[]> {
     let data = await this.opendbligdbaservice
-      .getAllMatchesOfSeason()
+      .getAllMatchesOfSeason(this.leaguepreference)
       .toPromise();
 
     let matches: Match[] = [];
@@ -126,7 +127,6 @@ export class ShowResultsComponent implements OnInit {
 
   showMatchesForTeampreference() {
     for (const match of this.allMatchesOfSeason) {
-      // not a match in which the selected team is? -> next
       if (
         match.Group.GroupOrderID < this.currentGameday - 8 || // wenn Spieltag kleiner als aktueller Spieltag - 10, suche weiter, ansonsten hinzufügen
         (match.Team1.TeamId != this.teampreference && //wenn Team 1 und Teampräferenz ungleich, suche weiter, ansonsten hinzufügen
@@ -134,7 +134,6 @@ export class ShowResultsComponent implements OnInit {
       )
         continue;
 
-      // match with selected team? add to list
       this.gameday.push(match);
     }
     this.gameday.length = 10;
@@ -172,6 +171,22 @@ export class ShowResultsComponent implements OnInit {
     for (let user of this.Users) {
       if (user.nutzerEmail === this.UserEmail) {
         this.teampreference = user.nutzerPraefVerein;
+      }
+    }
+  }
+
+  getLeaguePreferenceByMail(){
+    for(let user of this.Users) {
+      if(user.nutzerEmail === this.UserEmail){
+        if(user.nutzerPraefLiga == 4562){
+          this.leaguepreference = 'bl1';
+        }
+        if(user.nutzerPraefLiga == 4561){
+          this.leaguepreference = 'bl2';
+        }
+        if(user.nutzerPraefLiga == 4577){
+          this.leaguepreference = 'bl3de';
+        }
       }
     }
   }

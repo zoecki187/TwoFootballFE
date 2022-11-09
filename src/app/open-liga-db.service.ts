@@ -56,8 +56,8 @@ export class OpenLigaDbService {
     return this.leagues;
   }
 
-  getAllMatchesOfSeason(): Observable<any>{
-    return this.http.get(`https://www.openligadb.de/api/getmatchdata/bl1/2022`);
+  getAllMatchesOfSeason(league: String): Observable<any>{
+    return this.http.get(`https://www.openligadb.de/api/getmatchdata/${league}/2022`);
   }
 
   

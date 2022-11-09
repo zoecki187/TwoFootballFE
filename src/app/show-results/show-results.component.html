@@ -2,7 +2,8 @@
             mdl-layout--fixed-header">
     <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <div class="mdl-layout-spacer"></div>
+      <div class="mdl-layout-spacer">
+      </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
       </div>
@@ -11,7 +12,7 @@
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">TwoFootball</span>
     <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" (click)="myclub()" (click)="getUserPreferenceByMail()">Mein&nbsp;Verein</a>
+      <a class="mdl-navigation__link" (click)="getUserPreferenceByMail()" (click)="getLeaguePreferenceByMail()" (click)="myclub()">Mein&nbsp;Verein</a>
       <a class="mdl-navigation__link" (click)="onLeagueChange('bl1')"  >1.Bundesliga</a>
       <a class="mdl-navigation__link" (click)="onLeagueChange('bl2')" >2.Bundesliga</a>
       <a class="mdl-navigation__link" (click)="onLeagueChange('bl3de')">3.Bundesliga</a>
@@ -23,6 +24,12 @@
 <br>
 
 <h1>Matchergebnisse</h1>
+
+<div *ngFor="let verein of Vereine">
+  <div *ngIf="verein.vereinID == teampreference">
+      Dein Lieblingsverein ist {{verein.verein}}
+  </div>
+</div>
 
  Aktueller Spieltag: {{currentGameday}}
 

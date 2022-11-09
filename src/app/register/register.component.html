@@ -4,17 +4,17 @@
   </div>
   <br>
   <div class="formular">
-    <form>
+    <form ngNativeValidate #form>
       <h2>Registrierung</h2>
 
       <div class="inputs-container">
         Email:   
         <div>
-          <input [(ngModel)]="UserEmail"  type="text" name="UserEmail" placeholder="Email" required>
+          <input [(ngModel)]="UserEmail"  type="text" patter="[^@\s]+@[^@s]+" name="UserEmail" placeholder="Email" required>
         </div>
 
         Liga: 
-        <select class="select" [(ngModel)]="selectedLeague" name="selectedLeague" required>
+        <select class="select" [(ngModel)]="selectedLeague" name="selectedLeague" (change)="onChange()" required>
           <option *ngFor="let liga of Ligen" [ngValue]="liga.ligaID">
             {{ liga.liga }}
           </option>
@@ -22,7 +22,7 @@
 
         Verein: 
         <select class="select" [(ngModel)]="selectedTeam" name="selectedTeam" required>
-          <option *ngFor="let verein of Vereine" [ngValue]="verein.vereinID">
+          <option *ngFor="let verein of selectedVereine" [ngValue]="verein.vereinID">
             {{ verein.verein }}
           </option>
         </select>
@@ -34,7 +34,7 @@
       </div>
       Sie haben bereits ein Konto? <br />
       <a class="register" [routerLink]="['/login']">Log In</a> <br />
-      <button type="submit" (click)="onSubmit()"[routerLink]="['/login']" value="submit">submit</button> <br />
+      <button type="submit" (click)="form.checkValidity() ? onSubmit():null"[routerLink]="form.checkValidity() ? ['/login']:null" value="submit">submit</button> <br />
     </form>
   </div>
 </div>
