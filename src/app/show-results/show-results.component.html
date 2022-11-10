@@ -39,30 +39,30 @@ Wähle einen Spieltag aus: &nbsp;
 <select [(ngModel)]="selectedGameday" (change)="onGamedayChange()">
   <option *ngFor="let gameday of gamedays" [ngValue]="gameday">{{gameday}}</option>
 </select>
-
+<div class="table-scroll">
 <table>
   <tr class="gamedaytable">
     <td>Datum</td>
     <td>Team 1</td>
-    <td></td>
+    <td class="showImages"></td>
     <td>Ergebnis</td>
-    <td></td>
+    <td class="showImages"></td>
     <td>Team 2</td>
   </tr>
   <tr *ngFor="let match of gameday" class="table table-striped">
     <td>{{match.MatchDateTime}}</td>
-    <td>{{match.Team1.TeamName}}</td>
+    <td class="showImages">{{match.Team1.TeamName}}</td>
     <td><img src="{{match.Team1.TeamIconUrl}}"></td>
     <td *ngIf="match.MatchIsFinished && match.MatchResults[0].ResultOrderID==1">{{match.MatchResults[0].PointsTeam1}} - {{match.MatchResults[0].PointsTeam2}}</td>
     <td *ngIf="match.MatchIsFinished == false">&nbsp; - : -</td>
     <td><img src="{{match.Team2.TeamIconUrl}}"></td>
-    <td>{{match.Team2.TeamName}}</td>
+    <td class="showImages">{{match.Team2.TeamName}}</td>
   </tr>
 </table>
-
+</div>
 <hr>
 <div>
-<h1>Aktuelle Tabelle</h1>  
+<h1 clas="table-scroll">Aktuelle Tabelle</h1>  
    
 <table>
   <tr>
